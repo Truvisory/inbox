@@ -2,30 +2,24 @@ import React from 'react';
 
 const Message = (props) => {
     return ( 
-      <form className="form-horizontal well">
-        <div className="form-group">
-          <div className="col-sm-8 col-sm-offset-2">
-            <h4>Compose Message</h4>
+      <div className={props.message.read ? "row message read" : "row message unread"} >
+        <div className="col-xs-1">
+          <div className="row">
+            <div className="col-xs-2">
+              <input type="checkbox" checked={props.message.selected ? "checked" : ""}/>
+            </div>
+            <div className="col-xs-2">
+              <i onClick={props.starClick} className={props.message.starred ? "star fa fa-star" : "star fa fa-star-o"}>
+              </i>
+            </div>
           </div>
         </div>
-        <div className="form-group">
-          <label className="col-sm-2 control-label">Subject</label>
-          <div className="col-sm-8">
-            <input type="text" className="form-control" id="subject" placeholder="Enter a subject" name="subject" />
-          </div>
+        <div className="col-xs-11">
+          <a href="/#">
+            {props.message.subject}
+          </a>
         </div>
-        <div className="form-group">
-          <label className="col-sm-2 control-label">Body</label>
-          <div className="col-sm-8">
-            <textarea name="body" id="body" className="form-control"></textarea>
-          </div>
-        </div>
-        <div className="form-group">
-          <div className="col-sm-8 col-sm-offset-2">
-            <input type="submit" value="Send" className="btn btn-primary" />
-          </div>
-        </div>
-      </form>
+      </div>
     )
 }
 

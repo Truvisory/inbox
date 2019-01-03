@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import Toolbar from './components/Toolbar'
-import Message from './components/Message'
 import MessageList from './components/MessageList'
 const url = 'http://localhost:8082/api/messages'
 
@@ -31,7 +30,6 @@ class App extends Component {
     return (
       <div className="container">
         <Toolbar />
-        {/* <Message /> */}
         {this.state.messages[0]
           ? <MessageList 
               messages={this.state.messages}
