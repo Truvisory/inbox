@@ -5,7 +5,9 @@ const MessageList = (props) => {
     return ( 
       props.messages.map((message, idx) => 
         <Message
-          message={message} key={idx}/>
+          key={idx}
+          message={message} 
+          messageRead={props.messageRead}/>
       )
     )
 }
