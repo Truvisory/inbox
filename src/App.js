@@ -17,7 +17,20 @@ class App extends Component {
     this.setState({messages: json})
   }
 
-  messageRead = (id) => {
+  messageRead = async (id) => {
+    const read = await fetch(url, {
+      method: 'PATCH',
+      body: JSON.stringify({
+        "messageIds": [id],
+        "command": "read",
+        "read": true
+      }),
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
+      }
+    })
+
     const readMessages = this.state.messages.map(message => {
       if(message.id === id) {
         message.read = true
@@ -26,14 +39,30 @@ class App extends Component {
     })
     this.setState({messages: readMessages})
   }
-  
-  // starClick = (e) => {
-  //   // console.log(e.target.value)
-  //   let filteredProducts = 
-  //     this.state.messages.filter((message) => message.id === e.target.id * 1 )
-  //     console.log(e.target[2])
-  //   this.setState({starred: !this.state.starred})
-  // }
+
+  starClick = async (id) => {
+    const starred = await fetch(url, {
+      method: 'PATCH',
+      body: JSON.stringify({
+        "messageIds": [id],
+        "command": "star",
+        "starred": true
+      }),
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
+      }
+    })
+
+    const clickedStar = this.state.messages.map(message => {
+      if(message.id === id) {
+        message.starred = !message.starred
+      }
+    return message
+    })
+    
+    this.setState({messages: clickedStar})
+  }
 
   render() {
     console.log(this.state.messages)
@@ -44,7 +73,7 @@ class App extends Component {
           ? <MessageList 
               messages={this.state.messages}
               messageRead={this.messageRead}
-              // starClick={this.starClick}
+              starClick={this.starClick}
             />
           : <div></div>}
       </div>
