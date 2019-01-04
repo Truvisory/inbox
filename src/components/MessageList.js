@@ -8,7 +8,8 @@ const MessageList = (props) => {
           key={idx}
           message={message} 
           messageRead={props.messageRead}
-          starClick={props.starClick}/>
+          starClick={props.starClick}
+          selected={props.selected} />
       )
     )
 }

@@ -17,64 +17,112 @@ class App extends Component {
     this.setState({messages: json})
   }
 
-  messageRead = async (id) => {
-    const read = await fetch(url, {
+  updates = async (id, command, key, value) => {
+    await fetch(url, {
       method: 'PATCH',
       body: JSON.stringify({
         "messageIds": [id],
-        "command": "read",
-        "read": true
+        "command": command,
+        [key]: value
       }),
       headers: {
         'Content-Type': 'application/json',
         'Accept': 'application/json'
       }
     })
+  }
 
+  messageRead = (id) => {
+    this.updates(id, "read", "read", true)
     const readMessages = this.state.messages.map(message => {
-      if(message.id === id) {
-        message.read = true
-      }
+      if(message.id === id) message.read = true
     return message
     })
     this.setState({messages: readMessages})
   }
 
-  starClick = async (id) => {
-    const starred = await fetch(url, {
-      method: 'PATCH',
-      body: JSON.stringify({
-        "messageIds": [id],
-        "command": "star",
-        "starred": true
-      }),
-      headers: {
-        'Content-Type': 'application/json',
-        'Accept': 'application/json'
-      }
-    })
-
+  starClick = (id) => {
+    this.updates(id, "star", "starred", true)
     const clickedStar = this.state.messages.map(message => {
-      if(message.id === id) {
-        message.starred = !message.starred
-      }
+      if(message.id === id) message.starred = !message.starred
     return message
     })
-    
     this.setState({messages: clickedStar})
+  }
+
+  selected = (id) => {
+    const select = this.state.messages.map(message => {
+      if(message.id === id) message.selected = !message.selected
+    return message
+    })
+    this.setState({messages: select})
+  }
+
+  bulkSelect = () => {
+    const selectedMessages = this.state.messages.filter(message => message.selected === true)
+    const allSelected = this.state.messages.map(message => {
+      selectedMessages.length !== this.state.messages.length
+        ? message.selected = true
+        : message.selected = false
+      return message
+    })
+    this.setState({messages: allSelected})
+  }
+
+  markedRead = () => {
+    // Needs Persistence
+    const selectedMessages = this.state.messages.map(message => {
+      if(message.selected === true) message.read = true
+      return message
+    })
+    this.setState({messages: selectedMessages})
+  }
+
+  markedUnread = () => {
+    // Needs Persistence
+    const selectedMessages = this.state.messages.map(message => {
+      if(message.selected === true) message.read = false
+      return message
+    })
+    this.setState({messages: selectedMessages})
+  }
+
+  delete = () => {
+    // Needs Persistence
+    const selectedMessages = this.state.messages.filter(message => !message.selected === true)
+    this.setState({messages: selectedMessages})
+  }
+
+  applyLabel = (e) => {
+    // Hardcoded dev label and left off here
+    const selectedMessages = this.state.messages.map(message => {
+      if(message.selected === true) message.labels += [e.target.value]
+      return message
+    })
+    this.setState({messages: selectedMessages})
+  }
+
+  removeLabel = () => {
+    console.log("Label Removed")
   }
 
   render() {
     console.log(this.state.messages)
     return (
       <div className="container">
-        <Toolbar />
+        <Toolbar 
+          bulkSelect={this.bulkSelect} 
+          markedRead={this.markedRead}
+          markedUnread={this.markedUnread}
+          delete={this.delete}
+          applyLabel={this.applyLabel}
+          removeLabel={this.removeLabel}/>
         {this.state.messages[0]
           ? <MessageList 
               messages={this.state.messages}
               messageRead={this.messageRead}
               starClick={this.starClick}
-            />
+              selected={this.selected} />
           : <div></div>}
       </div>
     );
