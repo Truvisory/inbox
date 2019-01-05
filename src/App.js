@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Toolbar from './components/Toolbar'
+import ComposeForm from './components/ComposeForm'
 import MessageList from './components/MessageList'
 const url = 'http://localhost:8082/api/messages'
 
@@ -111,6 +112,10 @@ class App extends Component {
     this.setState({messages: selectedMessages})
   }
 
+  composeFormButton = () => {
+    console.log("yo")
+  }
+
   render() {
       console.log(this.state.messages)
       const unreadCount = this.state.messages.filter(message => message.read === false).length
@@ -127,7 +132,9 @@ class App extends Component {
           applyLabel={this.applyLabel}
           removeLabel={this.removeLabel}
           unreadCount={unreadCount} 
-          selectedIndicator={selectedIndicator} />
+          selectedIndicator={selectedIndicator}
+          composeFormButton={this.composeFormButton} />
+        <ComposeForm />
         {this.state.messages[0]
           ? <MessageList 
               messages={this.state.messages}

@@ -19,7 +19,7 @@ const Toolbar = (props) => {
             unread messages
           </p>
 
-          <a className="btn btn-danger" href="/#">
+          <a className="btn btn-danger" href="/#" onClick={props.composeFormButton}>
             <i className="fa fa-plus"></i>
           </a>
 
