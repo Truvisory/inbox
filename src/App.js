@@ -9,8 +9,7 @@ class App extends Component {
     super()
       this.state = {
         messages: [],
-        composeForm: false,
-        displayMessage: false
+        composeForm: false
       }
   }
 
@@ -188,7 +187,6 @@ class App extends Component {
         {this.state.messages[0]
           ? <MessageList 
               messages={this.state.messages}
-              displayMessage={this.state.displayMessage}
               messageRead={this.messageRead}
               starClick={this.starClick}
               selected={this.selected} />

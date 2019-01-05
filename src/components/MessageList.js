@@ -7,7 +7,6 @@ const MessageList = (props) => {
         <Message
           key={idx}
           message={message}
-          displayMessage={props.displayMessage}
           messageRead={props.messageRead}
           starClick={props.starClick}
           selected={props.selected} />

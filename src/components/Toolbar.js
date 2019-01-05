@@ -19,25 +19,24 @@ const Toolbar = (props) => {
             <span className="badge badge">{props.unreadCount}</span>
             unread messages
           </p>
-
-          <button className="btn btn-danger" onClick={props.composeFormButton}>
+          <button
+            className="btn btn-danger"
+            onClick={props.composeFormButton}>
             <i className="fa fa-plus"></i>
           </button>
-
-          <button className="btn btn-default" onClick={props.bulkSelect}>
+          <button 
+            className="btn btn-default"
+            onClick={props.bulkSelect}>
             <i className={selectIndicatorStatus}></i>
           </button>
-
           <button 
             className="btn btn-default"
             disabled={disabledWhenNothingSelected} 
             onClick={props.markedRead}>Mark As Read</button>
-
           <button 
             className="btn btn-default"
             disabled={disabledWhenNothingSelected}
             onClick={props.markedUnread}>Mark As Unread</button>
-
           <select 
             className="form-control label-select" 
             disabled={disabledWhenNothingSelected} 
@@ -47,7 +46,6 @@ const Toolbar = (props) => {
               <option value="personal">personal</option>
               <option value="gschool">gschool</option>
           </select>
-
           <select 
             className="form-control label-select" 
             disabled={disabledWhenNothingSelected} 
@@ -57,7 +55,6 @@ const Toolbar = (props) => {
               <option value="personal">personal</option>
               <option value="gschool">gschool</option>
           </select>
-
           <button 
             className="btn btn-default" 
             disabled={disabledWhenNothingSelected} 
