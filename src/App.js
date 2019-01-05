@@ -112,10 +112,10 @@ class App extends Component {
   }
 
   render() {
-    console.log(this.state.messages)
-    const unreadCount = this.state.messages.filter(message => message.read === false).length
-    const selectedIndicator = this.state.messages.filter(message => message.selected === true).length
-    const messageCount = this.state.messages.length
+      console.log(this.state.messages)
+      const unreadCount = this.state.messages.filter(message => message.read === false).length
+      const selectedIndicator = this.state.messages.filter(message => message.selected === true).length
+      const messageCount = this.state.messages.length
     return (
       <div className="container">
         <Toolbar 

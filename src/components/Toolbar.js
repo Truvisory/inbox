@@ -1,7 +1,16 @@
 import React from 'react';
 
 const Toolbar = (props) => {
-  const disabledWhenNothingSelected = props.selectedIndicator === 0 ? "disabled" : ""
+  const disabledWhenNothingSelected = 
+          props.selectedIndicator === 0 
+            ? "disabled" 
+            : ""
+  const selectIndicatorStatus = 
+          props.selectedIndicator === props.messageCount 
+            ? "fa fa-check-square-o"
+            : props.selectedIndicator === 0
+                ? "fa fa-square-o" 
+                : "fa fa-minus-square-o"
     return ( 
       <div className="row toolbar">
         <div className="col-md-12">
@@ -15,13 +24,7 @@ const Toolbar = (props) => {
           </a>
 
           <button className="btn btn-default" onClick={props.bulkSelect}>
-            <i 
-              className={props.selectedIndicator === props.messageCount 
-                ? "fa fa-check-square-o"
-                : props.selectedIndicator === 0
-                  ? "fa fa-square-o" 
-                  : "fa fa-minus-square-o"}>
-            </i>
+            <i className={selectIndicatorStatus}></i>
           </button>
 
           <button 
