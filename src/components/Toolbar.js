@@ -14,7 +14,13 @@ const Toolbar = (props) => {
           </a>
 
           <button className="btn btn-default" onClick={props.bulkSelect}>
-            <i className="fa fa-minus-square-o"></i>
+            <i 
+              className={props.selectedIndicator === props.messageCount 
+                ? "fa fa-check-square-o"
+                : props.selectedIndicator === 0
+                  ? "fa fa-square-o" 
+                  : "fa fa-minus-square-o" }>
+            </i>
           </button>
 
           <button className="btn btn-default" onClick={props.markedRead}>Mark As Read</button>

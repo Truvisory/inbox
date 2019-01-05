@@ -114,16 +114,20 @@ class App extends Component {
   render() {
     console.log(this.state.messages)
     const unreadCount = this.state.messages.filter(message => message.read === false).length
+    const selectedIndicator = this.state.messages.filter(message => message.selected === true).length
+    const messageCount = this.state.messages.length
     return (
       <div className="container">
         <Toolbar 
+          messageCount={messageCount}
           bulkSelect={this.bulkSelect} 
           markedRead={this.markedRead}
           markedUnread={this.markedUnread}
           delete={this.delete}
           applyLabel={this.applyLabel}
           removeLabel={this.removeLabel}
-          unreadCount={unreadCount}/>
+          unreadCount={unreadCount} 
+          selectedIndicator={selectedIndicator} />
         {this.state.messages[0]
           ? <MessageList 
               messages={this.state.messages}
