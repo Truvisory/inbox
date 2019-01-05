@@ -8,7 +8,8 @@ class App extends Component {
   constructor(){
     super()
       this.state = {
-        messages: []
+        messages: [],
+        composeForm: false
       }
   }
 
@@ -113,7 +114,7 @@ class App extends Component {
   }
 
   composeFormButton = () => {
-    console.log("yo")
+    this.setState({composeForm: !this.state.composeForm})
   }
 
   render() {
@@ -134,7 +135,9 @@ class App extends Component {
           unreadCount={unreadCount} 
           selectedIndicator={selectedIndicator}
           composeFormButton={this.composeFormButton} />
-        <ComposeForm />
+        {this.state.composeForm
+          ? <ComposeForm />
+          :<div></div> }
         {this.state.messages[0]
           ? <MessageList 
               messages={this.state.messages}

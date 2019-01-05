@@ -28,6 +28,7 @@ const Message = (props) => {
           props.message.labels.includes("gschool")
             ? "label label-warning" 
             : "hidden"
+    
     return ( 
       <div 
         className={messageReadOrSelected}>

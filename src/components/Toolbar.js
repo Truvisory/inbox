@@ -11,6 +11,7 @@ const Toolbar = (props) => {
             : props.selectedIndicator === 0
                 ? "fa fa-square-o" 
                 : "fa fa-minus-square-o"
+  
     return ( 
       <div className="row toolbar">
         <div className="col-md-12">
@@ -19,9 +20,9 @@ const Toolbar = (props) => {
             unread messages
           </p>
 
-          <a className="btn btn-danger" href="/#" onClick={props.composeFormButton}>
+          <button className="btn btn-danger" onClick={props.composeFormButton}>
             <i className="fa fa-plus"></i>
-          </a>
+          </button>
 
           <button className="btn btn-default" onClick={props.bulkSelect}>
             <i className={selectIndicatorStatus}></i>
