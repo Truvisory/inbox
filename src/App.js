@@ -36,7 +36,7 @@ class App extends Component {
     this.updates(id, "read", "read", true)
     const readMessages = this.state.messages.map(message => {
       if(message.id === id) message.read = true
-    return message
+      return message
     })
     this.setState({messages: readMessages})
   }
@@ -45,7 +45,7 @@ class App extends Component {
     this.updates(id, "star", "starred", true)
     const clickedStar = this.state.messages.map(message => {
       if(message.id === id) message.starred = !message.starred
-    return message
+      return message
     })
     this.setState({messages: clickedStar})
   }
@@ -53,7 +53,7 @@ class App extends Component {
   selected = (id) => {
     const select = this.state.messages.map(message => {
       if(message.id === id) message.selected = !message.selected
-    return message
+      return message
     })
     this.setState({messages: select})
   }
@@ -94,9 +94,9 @@ class App extends Component {
   }
 
   applyLabel = (e) => {
-    // Hardcoded dev label and left off here
+    // Needs Persistence
     const selectedMessages = this.state.messages.map(message => {
-      if(message.selected === true) message.labels += [e.target.value]
+      if(message.selected === true) message.labels = Array.from(new Set([...message.labels, e.target.value]))
       return message
     })
     this.setState({messages: selectedMessages})
