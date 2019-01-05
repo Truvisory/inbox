@@ -112,8 +112,12 @@ class App extends Component {
   }
 
   delete = () => {
-    // Needs Persistence
-    const selectedMessages = this.state.messages.filter(message => !message.selected === true)
+    const selectedMessages = this.state.messages.filter(message => {
+      if (message.selected === true) {
+        this.updates(message.id, "delete")
+      }
+      return !message.selected === true
+    })
     this.setState({messages: selectedMessages})
   }
 
@@ -123,7 +127,7 @@ class App extends Component {
       if(message.selected === true) {
         message.labels = Array.from(new Set([...message.labels, e.target.value]))
         console.log(message.labels)
-        // this.updates(message.id, "addLabel", "labels", message.labels)
+        this.updates(message.id, "addLabel", "labels", message.labels)
       }
       return message
     })

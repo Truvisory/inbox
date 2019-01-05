@@ -31,40 +31,39 @@ const Message = (props) => {
     
     return ( 
       <div>
-      <div 
-        className={messageReadOrSelected}>
-        <div className="col-xs-1">
-          <div className="row">
-            <div className="col-xs-2">
-              <input 
-                checked={checked}
-                onChange={() => props.selected(props.message.id)}
-                type="checkbox"/>
-            </div>
-            <div className="col-xs-2">
-              <i 
-                className={star}
-                onClick={() => props.starClick(props.message.id)} >
-              </i>
+        <div 
+          className={messageReadOrSelected}>
+          <div className="col-xs-1">
+            <div className="row">
+              <div className="col-xs-2">
+                <input 
+                  checked={checked}
+                  onChange={() => props.selected(props.message.id)}
+                  type="checkbox"/>
+              </div>
+              <div className="col-xs-2">
+                <i 
+                  className={star}
+                  onClick={() => props.starClick(props.message.id)} >
+                </i>
+              </div>
             </div>
           </div>
+          <div
+            className="col-xs-11" 
+            onClick={() => props.messageRead(props.message.id)} >
+            <span className={devLabel}>dev</span>
+            <span className={personalLabel}>personal</span>
+            <span className={gschoolLabel}>gschool</span>
+            <a href="/#">{props.message.subject}</a>
+          </div>
         </div>
-        <div
-          className="col-xs-11" 
-          onClick={() => props.messageRead(props.message.id)} >
-          <span className={devLabel}>dev</span>
-          <span className={personalLabel}>personal</span>
-          <span className={gschoolLabel}>gschool</span>
-          <a href="/#">{props.message.subject}</a>
-        </div>
+        {/* <div className="row message-body">
+          <div className="col-xs-11 col-xs-offset-1">
+            {props.message.body}
+          </div>
+        </div> */}
       </div>
-
-<div class="row message-body">
-<div class="col-xs-11 col-xs-offset-1">
-  This is the body of the message.
-</div>
-</div>
-</div>
     )
 }
 
