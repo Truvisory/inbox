@@ -117,6 +117,21 @@ class App extends Component {
     this.setState({composeForm: !this.state.composeForm})
   }
 
+  composeData = (e) => { e.preventDefault()
+    // Needs Persistence
+    let newMessage = {
+      body: e.target[1].value,
+      id: this.state.messages.length + 1,
+      labels: [],
+      read: false,
+      starred: false,
+      subject: e.target[0].value
+    }
+    this.setState({
+      messages: [newMessage, ...this.state.messages],
+      composeForm: !this.state.composeForm})
+  }
+
   render() {
       console.log(this.state.messages)
       const unreadCount = this.state.messages.filter(message => message.read === false).length
@@ -136,8 +151,8 @@ class App extends Component {
           selectedIndicator={selectedIndicator}
           composeFormButton={this.composeFormButton} />
         {this.state.composeForm
-          ? <ComposeForm />
-          :<div></div> }
+          ? <ComposeForm composeData={this.composeData}/>
+          : <div></div> }
         {this.state.messages[0]
           ? <MessageList 
               messages={this.state.messages}

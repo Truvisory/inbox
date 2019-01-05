@@ -2,7 +2,7 @@ import React from 'react';
 
 const ComposeForm = (props) => {
     return ( 
-      <form className="form-horizontal well">
+      <form className="form-horizontal well" onSubmit={props.composeData}>
         <div className="form-group">
           <div className="col-sm-8 col-sm-offset-2">
             <h4>Compose Message</h4>
