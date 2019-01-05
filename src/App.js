@@ -34,22 +34,40 @@ class App extends Component {
     })
   }
 
+  sendMessage = async (id, subject, body) => {
+    await fetch(url, {
+      method: 'POST',
+      body: JSON.stringify({
+        "messageIds": [id],
+        subject: subject,
+        body: body,
+        read: false,
+        starred: false,
+        labels: [],
+      }),
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
+      }
+    })
+  }
+
   messageRead = (id) => {
-    this.updates(id, "read", "read", true)
     const readMessages = this.state.messages.map(message => {
       if(message.id === id) message.read = true
       return message
     })
     this.setState({messages: readMessages})
+    this.updates(id, "read", "read", true)
   }
 
   starClick = (id) => {
-    this.updates(id, "star", "starred", true)
     const clickedStar = this.state.messages.map(message => {
       if(message.id === id) message.starred = !message.starred
       return message
     })
     this.setState({messages: clickedStar})
+    this.updates(id, "star", "starred", true)
   }
 
   selected = (id) => {
@@ -72,18 +90,22 @@ class App extends Component {
   }
 
   markedRead = () => {
-    // Needs Persistence
     const selectedMessages = this.state.messages.map(message => {
-      if(message.selected === true) message.read = true
+      if(message.selected === true) {
+        message.read = true
+        this.updates(message.id, "read", "read", true)
+      }
       return message
     })
     this.setState({messages: selectedMessages})
   }
 
   markedUnread = () => {
-    // Needs Persistence
     const selectedMessages = this.state.messages.map(message => {
-      if(message.selected === true) message.read = false
+      if(message.selected === true) {
+        message.read = false
+        this.updates(message.id, "read", "read", false)
+      }
       return message
     })
     this.setState({messages: selectedMessages})
@@ -96,9 +118,13 @@ class App extends Component {
   }
 
   applyLabel = (e) => {
-    // Needs Persistence
+    // Needs Persistence - not working
     const selectedMessages = this.state.messages.map(message => {
-      if(message.selected === true) message.labels = Array.from(new Set([...message.labels, e.target.value]))
+      if(message.selected === true) {
+        message.labels = Array.from(new Set([...message.labels, e.target.value]))
+        console.log(message.labels)
+        // this.updates(message.id, "addLabel", "labels", message.labels)
+      }
       return message
     })
     this.setState({messages: selectedMessages})
@@ -118,7 +144,6 @@ class App extends Component {
   }
 
   composeData = (e) => { e.preventDefault()
-    // Needs Persistence
     let newMessage = {
       body: e.target[1].value,
       id: this.state.messages.length + 1,
@@ -130,6 +155,7 @@ class App extends Component {
     this.setState({
       messages: [newMessage, ...this.state.messages],
       composeForm: !this.state.composeForm})
+    this.sendMessage(newMessage.id, newMessage.subject, newMessage.body)
   }
 
   render() {

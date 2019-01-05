@@ -30,6 +30,7 @@ const Message = (props) => {
             : "hidden"
     
     return ( 
+      <div>
       <div 
         className={messageReadOrSelected}>
         <div className="col-xs-1">
@@ -57,6 +58,13 @@ const Message = (props) => {
           <a href="/#">{props.message.subject}</a>
         </div>
       </div>
+
+<div class="row message-body">
+<div class="col-xs-11 col-xs-offset-1">
+  This is the body of the message.
+</div>
+</div>
+</div>
     )
 }
 
