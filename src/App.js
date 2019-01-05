@@ -60,6 +60,7 @@ class App extends Component {
 
   bulkSelect = () => {
     const selectedMessages = this.state.messages.filter(message => message.selected === true)
+    console.log(selectedMessages.length)
     const allSelected = this.state.messages.map(message => {
       selectedMessages.length !== this.state.messages.length
         ? message.selected = true
@@ -102,8 +103,13 @@ class App extends Component {
     this.setState({messages: selectedMessages})
   }
 
-  removeLabel = () => {
-    console.log("Label Removed")
+  removeLabel = (e) => {
+    // Needs Persistence
+    const selectedMessages = this.state.messages.map(message => {
+      if(message.selected === true) message.labels = message.labels.filter(label => label !== e.target.value) 
+      return message
+    })
+    this.setState({messages: selectedMessages})
   }
 
   render() {
