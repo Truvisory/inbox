@@ -6,7 +6,8 @@ const MessageList = (props) => {
       props.messages.map((message, idx) => 
         <Message
           key={idx}
-          message={message} 
+          message={message}
+          displayMessage={props.displayMessage}
           messageRead={props.messageRead}
           starClick={props.starClick}
           selected={props.selected} />

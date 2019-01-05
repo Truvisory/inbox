@@ -9,7 +9,8 @@ class App extends Component {
     super()
       this.state = {
         messages: [],
-        composeForm: false
+        composeForm: false,
+        displayMessage: false
       }
   }
 
@@ -57,7 +58,8 @@ class App extends Component {
       if(message.id === id) message.read = true
       return message
     })
-    this.setState({messages: readMessages})
+    this.setState({
+      messages: readMessages})
     this.updates(id, "read", "read", true)
   }
 
@@ -122,12 +124,10 @@ class App extends Component {
   }
 
   applyLabel = (e) => {
-    // Needs Persistence - not working
     const selectedMessages = this.state.messages.map(message => {
       if(message.selected === true) {
         message.labels = Array.from(new Set([...message.labels, e.target.value]))
-        console.log(message.labels)
-        this.updates(message.id, "addLabel", "labels", message.labels)
+        this.updates(message.id, "addLabel", "label", e.target.value)
       }
       return message
     })
@@ -135,9 +135,11 @@ class App extends Component {
   }
 
   removeLabel = (e) => {
-    // Needs Persistence
     const selectedMessages = this.state.messages.map(message => {
-      if(message.selected === true) message.labels = message.labels.filter(label => label !== e.target.value) 
+      if(message.selected === true) {
+        message.labels = message.labels.filter(label => label !== e.target.value) 
+        this.updates(message.id, "removeLabel", "label", e.target.value)
+      }
       return message
     })
     this.setState({messages: selectedMessages})
@@ -186,6 +188,7 @@ class App extends Component {
         {this.state.messages[0]
           ? <MessageList 
               messages={this.state.messages}
+              displayMessage={this.state.displayMessage}
               messageRead={this.messageRead}
               starClick={this.starClick}
               selected={this.selected} />
