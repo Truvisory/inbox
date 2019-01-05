@@ -60,7 +60,6 @@ class App extends Component {
 
   bulkSelect = () => {
     const selectedMessages = this.state.messages.filter(message => message.selected === true)
-    console.log(selectedMessages.length)
     const allSelected = this.state.messages.map(message => {
       selectedMessages.length !== this.state.messages.length
         ? message.selected = true
@@ -114,6 +113,7 @@ class App extends Component {
 
   render() {
     console.log(this.state.messages)
+    const unreadCount = this.state.messages.filter(message => message.read === false).length
     return (
       <div className="container">
         <Toolbar 
@@ -122,7 +122,8 @@ class App extends Component {
           markedUnread={this.markedUnread}
           delete={this.delete}
           applyLabel={this.applyLabel}
-          removeLabel={this.removeLabel}/>
+          removeLabel={this.removeLabel}
+          unreadCount={unreadCount}/>
         {this.state.messages[0]
           ? <MessageList 
               messages={this.state.messages}
