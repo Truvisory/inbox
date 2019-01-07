@@ -16,7 +16,11 @@ class App extends Component {
   async componentDidMount() {
     const response = await fetch(url)
     const json = await response.json()
-    this.setState({messages: json})
+    const addSelected = json.map(message => {
+      message.selected = false
+      return message
+    })
+    this.setState({messages: addSelected})
   }
 
   updates = async (id, command, key, value) => {
