@@ -28,7 +28,7 @@ class App extends Component {
     await fetch(url, {
       method: 'PATCH',
       body: JSON.stringify({
-        "messageIds": [id],
+        "messageIds": id,
         "command": command,
         [key]: value
       }),
@@ -66,7 +66,7 @@ class App extends Component {
       return message
     })
     this.setState({ messages: readMessages })
-    this.updates(id, "read", "read", true)
+    this.updates([id], "read", "read", true)
   }
 
   starClick = (id) => {
@@ -75,7 +75,7 @@ class App extends Component {
       return message
     })
     this.setState({ messages: clickedStar })
-    this.updates(id, "star", "starred", true)
+    this.updates([id], "star", "starred", true)
   }
 
   selected = (id) => {
@@ -98,56 +98,64 @@ class App extends Component {
   }
 
   markedRead = () => {
+    const arrId = []
     const selectedMessages = this.state.messages.map(message => {
       if(message.selected === true) {
         message.read = true
-        this.updates(message.id, "read", "read", true)
+        arrId.push(message.id)
       }
       return message
     })
+    this.updates(arrId, "read", "read", true)
     this.setState({ messages: selectedMessages })
   }
 
   markedUnread = () => {
+    const arrId = []
     const selectedMessages = this.state.messages.map(message => {
       if(message.selected === true) {
         message.read = false
-        this.updates(message.id, "read", "read", false)
+        arrId.push(message.id)
       }
       return message
     })
+    this.updates(arrId, "read", "read", false)
     this.setState({ messages: selectedMessages })
   }
 
   delete = () => {
+    const arrId = []
     const selectedMessages = this.state.messages.filter(message => {
-      if (message.selected === true) {
-        this.updates(message.id, "delete")
-      }
+      if (message.selected === true) arrId.push(message.id)
       return !message.selected === true
     })
+    this.updates(arrId, "delete")
     this.setState({ messages: selectedMessages })
   }
 
   applyLabel = (e) => {
+    const arrId = []
     const selectedMessages = this.state.messages.map(message => {
       if(message.selected === true) {
         message.labels = Array.from(new Set([...message.labels, e.target.value]))
-        this.updates(message.id, "addLabel", "label", e.target.value)
+        arrId.push(message.id)
       }
       return message
     })
+    this.updates(arrId, "addLabel", "label", e.target.value)
     this.setState({ messages: selectedMessages })
   }
 
   removeLabel = (e) => {
+    const arrId = []
     const selectedMessages = this.state.messages.map(message => {
       if(message.selected === true) {
-        message.labels = message.labels.filter(label => label !== e.target.value) 
-        this.updates(message.id, "removeLabel", "label", e.target.value)
+        message.labels = message.labels.filter(label => label !== e.target.value)
+        arrId.push(message.id) 
       }
       return message
     })
+    this.updates(arrId, "removeLabel", "label", e.target.value)
     this.setState({ messages: selectedMessages })
   }
 
@@ -158,7 +166,7 @@ class App extends Component {
   composeData = (e) => { e.preventDefault()
     let newMessage = {
       body: e.target[1].value,
-      id: this.state.messages.length + 1,
+      id: Math.random().toString(36).substr(2, 9),
       labels: [],
       read: false,
       starred: false,
@@ -171,7 +179,6 @@ class App extends Component {
   }
 
   render() {
-      console.log(this.state.messages)
       const unreadCount = this.state.messages.filter(message => message.read === false).length
       const selectedIndicator = this.state.messages.filter(message => message.selected === true).length
       const messageCount = this.state.messages.length
