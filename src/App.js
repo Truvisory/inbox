@@ -18,6 +18,7 @@ class App extends Component {
     const json = await response.json()
     const addSelected = json.map(message => {
       message.selected = false
+      message.opened = false
       return message
     })
     this.setState({messages: addSelected})
@@ -58,11 +59,13 @@ class App extends Component {
 
   messageRead = (id) => {
     const readMessages = this.state.messages.map(message => {
-      if(message.id === id) message.read = true
+      if(message.id === id) {
+        message.read = true
+        message.opened = !message.opened
+      }
       return message
     })
-    this.setState({
-      messages: readMessages})
+    this.setState({ messages: readMessages })
     this.updates(id, "read", "read", true)
   }
 
@@ -71,7 +74,7 @@ class App extends Component {
       if(message.id === id) message.starred = !message.starred
       return message
     })
-    this.setState({messages: clickedStar})
+    this.setState({ messages: clickedStar })
     this.updates(id, "star", "starred", true)
   }
 
@@ -80,7 +83,7 @@ class App extends Component {
       if(message.id === id) message.selected = !message.selected
       return message
     })
-    this.setState({messages: select})
+    this.setState({ messages: select })
   }
 
   bulkSelect = () => {
@@ -91,7 +94,7 @@ class App extends Component {
         : message.selected = false
       return message
     })
-    this.setState({messages: allSelected})
+    this.setState({ messages: allSelected })
   }
 
   markedRead = () => {
@@ -102,7 +105,7 @@ class App extends Component {
       }
       return message
     })
-    this.setState({messages: selectedMessages})
+    this.setState({ messages: selectedMessages })
   }
 
   markedUnread = () => {
@@ -113,7 +116,7 @@ class App extends Component {
       }
       return message
     })
-    this.setState({messages: selectedMessages})
+    this.setState({ messages: selectedMessages })
   }
 
   delete = () => {
@@ -123,7 +126,7 @@ class App extends Component {
       }
       return !message.selected === true
     })
-    this.setState({messages: selectedMessages})
+    this.setState({ messages: selectedMessages })
   }
 
   applyLabel = (e) => {
@@ -134,7 +137,7 @@ class App extends Component {
       }
       return message
     })
-    this.setState({messages: selectedMessages})
+    this.setState({ messages: selectedMessages })
   }
 
   removeLabel = (e) => {
@@ -145,11 +148,11 @@ class App extends Component {
       }
       return message
     })
-    this.setState({messages: selectedMessages})
+    this.setState({ messages: selectedMessages })
   }
 
   composeFormButton = () => {
-    this.setState({composeForm: !this.state.composeForm})
+    this.setState({ composeForm: !this.state.composeForm })
   }
 
   composeData = (e) => { e.preventDefault()
