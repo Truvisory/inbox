@@ -41,7 +41,7 @@ const Toolbar = (props) => {
             className="form-control label-select" 
             disabled={disabledWhenNothingSelected} 
             onChange={props.applyLabel}>
-              <option>Apply label</option>
+              <option >Apply label</option>
               <option value="dev">dev</option>
               <option value="personal">personal</option>
               <option value="gschool">gschool</option>

@@ -106,8 +106,8 @@ class App extends Component {
       }
       return message
     })
-    this.updates(arrId, "read", "read", true)
     this.setState({ messages: selectedMessages })
+    this.updates(arrId, "read", "read", true)
   }
 
   markedUnread = () => {
@@ -119,8 +119,8 @@ class App extends Component {
       }
       return message
     })
-    this.updates(arrId, "read", "read", false)
     this.setState({ messages: selectedMessages })
+    this.updates(arrId, "read", "read", false)
   }
 
   delete = () => {
@@ -129,21 +129,21 @@ class App extends Component {
       if (message.selected === true) arrId.push(message.id)
       return !message.selected === true
     })
-    this.updates(arrId, "delete")
     this.setState({ messages: selectedMessages })
+    this.updates(arrId, "delete")
   }
 
   applyLabel = (e) => {
     const arrId = []
     const selectedMessages = this.state.messages.map(message => {
-      if(message.selected === true) {
+      if(message.selected === true && e.target.value !== "Apply label") {
         message.labels = Array.from(new Set([...message.labels, e.target.value]))
         arrId.push(message.id)
       }
       return message
     })
-    this.updates(arrId, "addLabel", "label", e.target.value)
     this.setState({ messages: selectedMessages })
+    this.updates(arrId, "addLabel", "label", e.target.value)
   }
 
   removeLabel = (e) => {
@@ -155,8 +155,8 @@ class App extends Component {
       }
       return message
     })
-    this.updates(arrId, "removeLabel", "label", e.target.value)
     this.setState({ messages: selectedMessages })
+    this.updates(arrId, "removeLabel", "label", e.target.value)
   }
 
   composeFormButton = () => {
@@ -179,6 +179,7 @@ class App extends Component {
   }
 
   render() {
+      console.log(this.state.messages)
       const unreadCount = this.state.messages.filter(message => message.read === false).length
       const selectedIndicator = this.state.messages.filter(message => message.selected === true).length
       const messageCount = this.state.messages.length
