@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import Toolbar from './components/Toolbar'
 import ComposeForm from './components/ComposeForm'
 import MessageList from './components/MessageList'
-const url = 'http://localhost:8082/api/messages'
+const url = 'https://peaceful-inlet-98478.herokuapp.com/api/messages'
 
 class App extends Component {
   constructor(){
@@ -39,16 +39,12 @@ class App extends Component {
     })
   }
 
-  sendMessage = async (id, subject, body) => {
+  sendMessage = async (subject, body) => {
     await fetch(url, {
       method: 'POST',
       body: JSON.stringify({
-        "messageIds": [id],
         subject: subject,
         body: body,
-        read: false,
-        starred: false,
-        labels: [],
       }),
       headers: {
         'Content-Type': 'application/json',
@@ -175,7 +171,7 @@ class App extends Component {
     this.setState({
       messages: [newMessage, ...this.state.messages],
       composeForm: !this.state.composeForm})
-    this.sendMessage(newMessage.id, newMessage.subject, newMessage.body)
+    this.sendMessage(newMessage.subject, newMessage.body)
   }
 
   render() {
